@@ -6,7 +6,8 @@
     "message": "You shall not pass!"
   }
 */
-function restricted() {
+
+function restricted(request, response, next) {
 
 }
 
@@ -18,7 +19,8 @@ function restricted() {
     "message": "Username taken"
   }
 */
-function checkUsernameFree() {
+
+function checkUsernameFree(request, response, next) {
 
 }
 
@@ -30,7 +32,8 @@ function checkUsernameFree() {
     "message": "Invalid credentials"
   }
 */
-function checkUsernameExists() {
+
+function checkUsernameExists(request, response, next) {
 
 }
 
@@ -42,7 +45,8 @@ function checkUsernameExists() {
     "message": "Password must be longer than 3 chars"
   }
 */
-function checkPasswordLength() {
+
+function checkPasswordLength(request, response, next) {
 
 }
 

@@ -16,7 +16,7 @@ const authRouter = require('./auth/auth-router');
 
   The session can be persisted in memory (would not be adequate for production)
   or you can use a session store like `connect-session-knex`.
- */
+*/
 
 const server = express();
 

@@ -28,7 +28,7 @@ const { checkUsernameFree, checkUsernameExists, checkPasswordLength } = require(
   {
     "message": "Password must be longer than 3 chars"
   }
- */
+*/
 
 router.post('/register', (request, response, next) => {
   response.json('This is a test.');
@@ -48,7 +48,7 @@ router.post('/register', (request, response, next) => {
   {
     "message": "Invalid credentials"
   }
- */
+*/
 
 router.post('/login', (request, response, next) => {
   response.json('This is a test.');
@@ -68,7 +68,7 @@ router.post('/login', (request, response, next) => {
   {
     "message": "no session"
   }
- */
+*/
 
 router.get('/logout', (request, response, next) => {
   response.json('This is a test.');

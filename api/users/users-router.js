@@ -27,9 +27,9 @@ const { restricted } = require('../auth/auth-middleware');
   {
     "message": "You shall not pass!"
   }
- */
+*/
 
-router.get('/', (request, response, next) => {
+router.get('/', restricted, (request, response, next) => {
   response.json('This is a test.');
 });
 
