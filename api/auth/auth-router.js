@@ -59,8 +59,8 @@ router.post('/register', checkUsernameFree, checkPasswordLength, async (request,
 
 router.post('/login', checkUsernameExists, (request, response, next) => {
   const { password } = request.body;
-  const passwordComparison = bcrypt.compareSync(password, request.user.password);
-  if (passwordComparison) {
+  const passwordMatch = bcrypt.compareSync(password, request.user.password);
+  if (passwordMatch) {
     request.session.user = request.user;
     response.json({ message: `Welcome ${request.user.username}` });
   } else {
@@ -85,9 +85,19 @@ router.post('/login', checkUsernameExists, (request, response, next) => {
 */
 
 router.get('/logout', (request, response, next) => {
-  response.json('This is a test.');
+  if (request.session.user) {
+    request.session.destroy(error => {
+      if (error) {
+        next(error);
+      } else {
+        response.json({ message: 'logged out' });
+      }
+    })
+  } else {
+    response.json({ message: 'no session' });
+  }
 });
- 
+
 // Don't forget to add the router to the `exports` object so it can be required in other modules
 
 module.exports = router;

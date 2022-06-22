@@ -19,7 +19,7 @@ const authRouter = require('./auth/auth-router');
 */
 
 const session = require('express-session');
-const Store = require('express-session-knex')(session);
+const Store = require('connect-session-knex')(session);
 
 const knex = require('../data/db-config');
 
