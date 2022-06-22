@@ -5,7 +5,7 @@ const database = require('../../data/db-config');
 */
 
 function find() {
-  return database('users');
+  return database('users').select('user_id', 'username');
 }
 
 /**
@@ -21,7 +21,7 @@ function findBy(filter) {
 */
 
 function findById(user_id) {
-  return database('users').where('user_id', user_id).first();
+  return database('users').select('user_id', 'username').where('user_id', user_id).first();
 }
 
 /**
