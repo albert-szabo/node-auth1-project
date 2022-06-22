@@ -3,7 +3,11 @@
 
 const express = require('express');
 
+const bcrypt = require('bcryptjs');
+
 const router = express.Router();
+
+const Users = require('../users/users-model');
 
 const { checkUsernameFree, checkUsernameExists, checkPasswordLength } = require('./auth-middleware');
 
@@ -30,8 +34,16 @@ const { checkUsernameFree, checkUsernameExists, checkPasswordLength } = require(
   }
 */
 
-router.post('/register', checkUsernameFree, checkPasswordLength, (request, response, next) => {
-  response.json('This is a test.');
+router.post('/register', checkUsernameFree, checkPasswordLength, async (request, response, next) => {
+  try {
+    const { username, password } = request.body;
+    const hash = bcrypt.hashSync(password, 12);
+
+    const newUser = await Users.add({ username, password: hash });
+    response.status(201).json(newUser);
+  } catch (error) {
+    next(error);
+  }
 });
 
 /**
