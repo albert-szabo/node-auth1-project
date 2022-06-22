@@ -45,6 +45,7 @@ async function checkUsernameExists(request, response, next) {
   if (!possibleExistingUsers.length) {
     next({ status: 401, message: 'Invalid credentials' });
   } else {
+    request.user = possibleExistingUsers[0];
     next();
   }
 }

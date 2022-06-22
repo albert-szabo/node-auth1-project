@@ -35,15 +35,10 @@ const { checkUsernameFree, checkUsernameExists, checkPasswordLength } = require(
 */
 
 router.post('/register', checkUsernameFree, checkPasswordLength, async (request, response, next) => {
-  try {
-    const { username, password } = request.body;
-    const hash = bcrypt.hashSync(password, 12);
-
-    const newUser = await Users.add({ username, password: hash });
-    response.status(201).json(newUser);
-  } catch (error) {
-    next(error);
-  }
+  const { username, password } = request.body;
+  const hash = bcrypt.hashSync(password, 12);
+  const newUser = await Users.add({ username, password: hash });
+  response.status(201).json(newUser);
 });
 
 /**
@@ -63,7 +58,14 @@ router.post('/register', checkUsernameFree, checkPasswordLength, async (request,
 */
 
 router.post('/login', checkUsernameExists, (request, response, next) => {
-  response.json('This is a test.');
+  const { password } = request.body;
+  const passwordComparison = bcrypt.compareSync(password, request.user.password);
+  if (passwordComparison) {
+    request.session.user = request.user;
+    response.json({ message: `Welcome ${request.user.username}` });
+  } else {
+    next({ status: 401, message: 'Invalid credentials' });
+  }
 });
 
 /**
