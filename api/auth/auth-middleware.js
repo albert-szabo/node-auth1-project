@@ -59,7 +59,12 @@ async function checkUsernameExists(request, response, next) {
 */
 
 function checkPasswordLength(request, response, next) {
-
+  const { password } = request.body;
+  if (!password || password.trim().length <= 3) {
+    next({ status: 422, message: 'Password must be longer than 3 chars' });
+  } else {
+    next();
+  }
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
