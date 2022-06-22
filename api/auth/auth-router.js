@@ -30,7 +30,7 @@ const { checkUsernameFree, checkUsernameExists, checkPasswordLength } = require(
   }
 */
 
-router.post('/register', (request, response, next) => {
+router.post('/register', checkUsernameFree, checkPasswordLength, (request, response, next) => {
   response.json('This is a test.');
 });
 
@@ -50,7 +50,7 @@ router.post('/register', (request, response, next) => {
   }
 */
 
-router.post('/login', (request, response, next) => {
+router.post('/login', checkUsernameExists, (request, response, next) => {
   response.json('This is a test.');
 });
 
