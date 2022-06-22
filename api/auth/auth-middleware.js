@@ -9,8 +9,12 @@ const Users = require('../users/users-model');
   }
 */
 
-function restricted(request, response, next) {
-
+function restricted (request, response, next) {
+  if (request.session.user) {
+    next();
+  } else {
+    next({ status: 401, message: 'You shall not pass!' });
+  }
 }
 
 /*
@@ -22,7 +26,7 @@ function restricted(request, response, next) {
   }
 */
 
-async function checkUsernameFree(request, response, next) {
+async function checkUsernameFree (request, response, next) {
   const possibleExistingUsers = await Users.findBy({ username: request.body.username });
   if (possibleExistingUsers.length) {
     next({ status: 422, message: 'Username taken' });
@@ -40,7 +44,7 @@ async function checkUsernameFree(request, response, next) {
   }
 */
 
-async function checkUsernameExists(request, response, next) {
+async function checkUsernameExists (request, response, next) {
   const possibleExistingUsers = await Users.findBy({ username: request.body.username });
   if (!possibleExistingUsers.length) {
     next({ status: 401, message: 'Invalid credentials' });
@@ -59,7 +63,7 @@ async function checkUsernameExists(request, response, next) {
   }
 */
 
-function checkPasswordLength(request, response, next) {
+function checkPasswordLength (request, response, next) {
   const { password } = request.body;
   if (!password || password.trim().length <= 3) {
     next({ status: 422, message: 'Password must be longer than 3 chars' });
